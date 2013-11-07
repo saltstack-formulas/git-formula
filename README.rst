@@ -1,7 +1,0 @@
-git
-===
-
-git
----
-
-Install git
