@@ -1,2 +1,5 @@
+{% from "git/map.jinja" import git with context %}
+
 git:
-  pkg.installed
+  pkg.installed:
+    - name: {{ git.get('git', 'git') }}
