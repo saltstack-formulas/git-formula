@@ -1,0 +1,8 @@
+{% set git = salt['grains.filter_by']({
+    'Debian': {
+        'git': 'git',
+    },
+    'Gentoo': {
+        'git': 'dev-vcs/git',
+    },
+}, merge=salt['pillar.get']('git:lookup')) %}
