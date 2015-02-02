@@ -1,4 +1,7 @@
 {% set git = salt['grains.filter_by']({
+    'RedHat': {
+        'git': 'git',
+    },
     'Debian': {
         'git': 'git',
     },
