@@ -1,4 +1,7 @@
 {% set git = salt['grains.filter_by']({
+    'Arch': {
+        'git': 'git',
+    },
     'RedHat': {
         'git': 'git',
     },
