@@ -1,6 +1,6 @@
 {% from "git/map.jinja" import git with context %}
 
-{% if grains['os_family'] == 'Debian' %}
+{% if grains['os'] == 'Ubuntu' %}
 git_repo:
   pkgrepo.managed:
     - humanname: git-ppa-{{ grains['oscodename'] }}
