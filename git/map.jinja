@@ -20,4 +20,7 @@
     'FreeBSD': {
         'git': 'git',
     },
+    'Windows': {
+        'git': 'msysgit',
+    },
 }, merge=salt['pillar.get']('git:lookup')) %}
