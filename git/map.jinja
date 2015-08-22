@@ -1,26 +1,43 @@
-{% set git = salt['grains.filter_by']({
-    'Arch': {
+{% set default_settings = {
+    'git': {
         'git': 'git',
-    },
-    'RedHat': {
-        'git': 'git',
-    },
-    'Debian': {
-        'git': 'git',
-    },
-    'Solaris': {
-        'git': 'git',
-    },
+        'install_from_source': False,
+        'install_pkgrepo': False,
+        'source_install': {
+            'remove_system_package': False,
+            'version': '1.8.4.2',
+            'checksum': 'sha1=f2e9317703553b4215700605c15d0f3a30623a9d',
+            'source_root': '/usr/local/src',
+            'install_prefix': '/usr/local',
+            'pkg_deps': [
+                'libcurl4-openssl-dev',
+                'libexpat1-dev',
+                'gettext',
+                'libz-dev',
+                'libssl-dev',
+                'build-essential',
+            ],
+        }
+    }
+} %}
+
+{% set os_family_settings = salt['grains.filter_by']({
+    'Arch': {},
+    'RedHat': {},
+    'Debian': {},
+    'Solaris': {},
+    'FreeBSD': {},
     'Gentoo': {
         'git': 'dev-vcs/git',
     },
     'Suse': {
         'git': 'git-core',
     },
-    'FreeBSD': {
-        'git': 'git',
-    },
     'Windows': {
         'git': 'msysgit',
     },
 }, merge=salt['pillar.get']('git:lookup')) %}
+
+{% do default_settings.update(os_family_settings) %}
+
+{% set git_settings = salt['pillar.get']('git', default=default_settings.git, merge=True) %}
