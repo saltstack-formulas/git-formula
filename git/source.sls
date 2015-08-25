@@ -1,25 +1,19 @@
-{% set git = pillar.get('git', {}) -%}
-{% set version = git.get('version', '1.8.4.2') -%}
-{% set checksum = git.get('checksum', 'sha1=f2e9317703553b4215700605c15d0f3a30623a9d') -%}
-{% set source = git.get('source_root', '/usr/local/src') -%}
-
-{% set git_package = source + '/git-' + version + '.tar.gz' -%}
+{%- from "git/map.jinja" import git_settings with context %}
+{%- set git_src = git_settings.source_install %}
+{%- set git_package = git_src.source_root ~ '/git-' ~ git_src.version ~ '.tar.gz' %}
 
 get-git:
   pkg.installed:
-      - names:
-        - libcurl4-openssl-dev 
-        - libexpat1-dev 
-        - gettext 
-        - libz-dev 
-        - libssl-dev
-        - build-essential
+    - names:
+{%- for install_dep in git_src.pkg_deps %}
+      - {{ install_dep }}
+{%- endfor %}
   file.managed:
     - name: {{ git_package }}
-    - source: https://git-core.googlecode.com/files/git-{{ version }}.tar.gz
-    - source_hash: {{ checksum }}
+    - source: https://git-core.googlecode.com/files/git-{{ git_src.version }}.tar.gz
+    - source_hash: {{ git_src.checksum }}
   cmd.wait:
-    - cwd: {{ source }}
+    - cwd: {{ git_src.source_root }}
     - name: tar -zxf {{ git_package }}
     - require:
       - pkg: get-git
@@ -27,11 +21,13 @@ get-git:
       - file: get-git
 
 git:
+{%- if git_src.remove_system_package %}
   pkg.removed:
-    - name: git
+    - name: {{ git_settings.git }}
+{%- endif %}
   cmd.wait:
-    - cwd: {{ source + '/git-' + version }}
-    - name: make prefix=/usr/local all && make prefix=/usr/local install
+    - cwd: {{ git_src.source_root + '/git-' + git_src.version }}
+    - name: make prefix={{ git_src.install_prefix }} all && make prefix={{ git_src.install_prefix }} install
     - watch:
       - cmd: get-git
     - require:

@@ -1,6 +1,8 @@
+{%- from "git/map.jinja" import git_settings with context %}
+
 include:
-{% if pillar.get('git', {}).get('install_from_source') %}  
+{%- if git_settings.install_from_source %}
   - git.source
-{% else %}
+{%- else %}
   - git.package
-{% endif %}
+{%- endif %}
