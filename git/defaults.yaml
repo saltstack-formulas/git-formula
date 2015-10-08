@@ -2,7 +2,7 @@ git:
   git: git
   install_from_source: False
   install_pkgrepo: False
-  source_instal:
+  source_install:
     remove_system_package: False
     version: 1.8.4.2
     checksum: 'sha1=f2e9317703553b4215700605c15d0f3a30623a9d'
