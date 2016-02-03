@@ -2,9 +2,7 @@
 
 {% set os_family_map = salt['grains.filter_by']({
     'Arch': {},
-    'RedHat': {
-        'git': 'git2u',
-    },
+    'RedHat': {},
     'Debian': {},
     'Solaris': {},
     'FreeBSD': {},
