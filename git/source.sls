@@ -10,7 +10,7 @@ get-git:
 {%- endfor %}
   file.managed:
     - name: {{ git_package }}
-    - source: https://git-core.googlecode.com/files/git-{{ git_src.version }}.tar.gz
+    - source: https://www.kernel.org/pub/software/scm/git/git-{{ git_src.version }}.tar.gz
     - source_hash: {{ git_src.checksum }}
   cmd.wait:
     - cwd: {{ git_src.source_root }}
