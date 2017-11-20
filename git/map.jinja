@@ -7,13 +7,13 @@
     'Solaris': {},
     'FreeBSD': {},
     'Gentoo': {
-        'git': 'dev-vcs/git',
+      'git': 'dev-vcs/git',
     },
     'Suse': {
-        'git': 'git-core',
+      'git': 'git-core',
     },
     'Windows': {
-        'git': 'msysgit',
+      'git': 'msysgit',
     },
 }, grain="os_family", merge=salt['pillar.get']('git:lookup')) %}
 
