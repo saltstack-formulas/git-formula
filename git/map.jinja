@@ -11,8 +11,8 @@
     },
     'Suse': {
         'git': salt['grains.filter_by']({
-          'SLES': 'git-core',
-          'default': 'git',
+            'SLES': 'git-core',
+            'default': 'git',
         }, grain='osfullname'),
     },
     'Windows': {
